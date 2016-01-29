@@ -1,0 +1,206 @@
+// KODU TAMAMEN KENDİM YAZMADIM. KODDA BAZI DEĞİŞİKLİKLER YAPARAK İSTEDİĞİM HALE GETİRDİM. [DOĞUKAN DEMİRÖZ]
+
+#include <IRremote.h>
+
+int IR_Recv = 11;   //IR ALICI
+int g_ledPin = 3;  //YEŞİL
+int r_ledPin = 2;  //KIRMIZI
+int b_ledPin = 4; //MAVİ
+int ledPins[] = {5, 6, 9, 10};  //array with all the LED's pins
+int ledStates[] = {0, 0, 0, 0}; //this means the LED's states at first is 0 = LOW
+int i = 0; //LED index for the arrays
+
+IRrecv irrecv(IR_Recv);
+decode_results results;
+
+void setup() {
+  irrecv.enableIRIn(); // Starts the receiver
+  pinMode(g_ledPin, OUTPUT);      // ÇIKIŞ OLARAK ATIYORUZ
+  pinMode(r_ledPin, OUTPUT);      // ÇIKIŞ OLARAK ATIYORUZ
+  pinMode(b_ledPin, OUTPUT);      // ÇIKIŞ OLARAK ATIYORUZ
+
+}
+void loop() {
+  //decodes the infrared input
+  if (irrecv.decode(&results)) {
+    long int decCode = results.value;
+    
+    //SWİTCH CASE YAPISINI KUMANDADAKİ TUŞLARI KULLANMAK İÇİN UYGULUYORUZ
+    switch (results.value) {
+
+
+      case 16754775: // + TUŞUNA BASILDIĞINDA TÜM LEDLER YANIYOR
+        
+        digitalWrite(g_ledPin, HIGH);   
+        ledStates[0] = 0;              
+        digitalWrite(r_ledPin, HIGH);   
+        ledStates[2] = 0;              
+        digitalWrite(b_ledPin, HIGH);   
+        ledStates[3] = 0;              
+        break;
+
+
+      case 16769055: // - TUŞUNA BASTIĞIMIZDA TÜM LEDLER KAPANIYOR
+        digitalWrite(g_ledPin, LOW);   // sets the green LED off
+        ledStates[0] = 0;              // updates the LED stat           // updates the LED state
+        digitalWrite(r_ledPin, LOW);   // sets the red LED off
+        ledStates[2] = 0;              // updates the LED state
+        digitalWrite(b_ledPin, LOW);   // sets the blue LED off
+        ledStates[3] = 0;              // updates the LED state
+        break;
+
+      case 16724175: //KIRMIZI AÇILDI
+        
+        digitalWrite(g_ledPin, LOW);   // sets the green LED off
+        ledStates[0] = 0;              // updates the LED stat           // updates the LED state
+        digitalWrite(r_ledPin, HIGH);   // sets the red LED off
+        ledStates[2] = 0;              // updates the LED state
+        digitalWrite(b_ledPin, LOW);   // sets the blue LED off
+        ledStates[3] = 0;              // updates the LED state
+        break;
+
+      case 16718055: //YEŞİL AÇILDI
+        Serial.println("Turns OFF all the LED's");
+        digitalWrite(g_ledPin, HIGH);   // sets the green LED off
+        ledStates[0] = 0;              // updates the LED stat           // updates the LED state
+        digitalWrite(r_ledPin, LOW);   // sets the red LED off
+        ledStates[2] = 0;              // updates the LED state
+        digitalWrite(b_ledPin, LOW);   // sets the blue LED off
+        ledStates[3] = 0;              // updates the LED state
+        break;
+
+      case 16743045: //MAVİ AÇILDI
+        Serial.println("Turns OFF all the LED's");
+        digitalWrite(g_ledPin, LOW);   // sets the green LED off
+        ledStates[0] = 0;              // updates the LED stat           // updates the LED state
+        digitalWrite(r_ledPin, LOW);   // sets the red LED off
+        ledStates[2] = 0;              // updates the LED state
+        digitalWrite(b_ledPin, HIGH);   // sets the blue LED off
+        ledStates[3] = 0;              // updates the LED state
+        break;
+
+ case 16716015: //SIRALI ŞEKİLDE AÇILIP KAPANDI
+        Serial.println("Turns OFF all the LED's");
+        digitalWrite(g_ledPin, LOW);   // sets the green LED off
+        ledStates[0] = 0;              // updates the LED stat           // updates the LED state
+        digitalWrite(r_ledPin, HIGH);   // sets the red LED off
+        ledStates[2] = 0;              // updates the LED state
+        digitalWrite(b_ledPin, LOW);   // sets the blue LED off
+        ledStates[3] = 0;              // updates the LED state
+        delay(200);
+        digitalWrite(g_ledPin, HIGH);   // sets the green LED off
+        ledStates[0] = 0;              // updates the LED stat           // updates the LED state
+        digitalWrite(r_ledPin, LOW);   // sets the red LED off
+        ledStates[2] = 0;              // updates the LED state
+        digitalWrite(b_ledPin, LOW);
+        delay(200);
+        digitalWrite(g_ledPin, LOW);   // sets the green LED off
+        ledStates[0] = 0;              // updates the LED stat           // updates the LED state
+        digitalWrite(r_ledPin, LOW);   // sets the red LED off
+        ledStates[2] = 0;              // updates the LED state
+        digitalWrite(b_ledPin, HIGH);
+        delay(200);
+        Serial.println("Turns OFF all the LED's");
+        digitalWrite(g_ledPin, LOW);   // sets the green LED off
+        ledStates[0] = 0;              // updates the LED stat           // updates the LED state
+        digitalWrite(r_ledPin, HIGH);   // sets the red LED off
+        ledStates[2] = 0;              // updates the LED state
+        digitalWrite(b_ledPin, LOW);   // sets the blue LED off
+        ledStates[3] = 0;              // updates the LED state
+        delay(200);
+        digitalWrite(g_ledPin, HIGH);   // sets the green LED off
+        ledStates[0] = 0;              // updates the LED stat           // updates the LED state
+        digitalWrite(r_ledPin, LOW);   // sets the red LED off
+        ledStates[2] = 0;              // updates the LED state
+        digitalWrite(b_ledPin, LOW);
+        delay(200);
+        digitalWrite(g_ledPin, LOW);   // sets the green LED off
+        ledStates[0] = 0;              // updates the LED stat           // updates the LED state
+        digitalWrite(r_ledPin, LOW);   // sets the red LED off
+        ledStates[2] = 0;              // updates the LED state
+        digitalWrite(b_ledPin, HIGH);
+        delay(200);Serial.println("Turns OFF all the LED's");
+        digitalWrite(g_ledPin, LOW);   // sets the green LED off
+        ledStates[0] = 0;              // updates the LED stat           // updates the LED state
+        digitalWrite(r_ledPin, HIGH);   // sets the red LED off
+        ledStates[2] = 0;              // updates the LED state
+        digitalWrite(b_ledPin, LOW);   // sets the blue LED off
+        ledStates[3] = 0;              // updates the LED state
+        delay(200);
+        digitalWrite(g_ledPin, HIGH);   // sets the green LED off
+        ledStates[0] = 0;              // updates the LED stat           // updates the LED state
+        digitalWrite(r_ledPin, LOW);   // sets the red LED off
+        ledStates[2] = 0;              // updates the LED state
+        digitalWrite(b_ledPin, LOW);
+        delay(200);
+        digitalWrite(g_ledPin, LOW);   // sets the green LED off
+        ledStates[0] = 0;              // updates the LED stat           // updates the LED state
+        digitalWrite(r_ledPin, LOW);   // sets the red LED off
+        ledStates[2] = 0;              // updates the LED state
+        digitalWrite(b_ledPin, HIGH);
+        delay(200);Serial.println("Turns OFF all the LED's");
+        digitalWrite(g_ledPin, LOW);   // sets the green LED off
+        ledStates[0] = 0;              // updates the LED stat           // updates the LED state
+        digitalWrite(r_ledPin, HIGH);   // sets the red LED off
+        ledStates[2] = 0;              // updates the LED state
+        digitalWrite(b_ledPin, LOW);   // sets the blue LED off
+        ledStates[3] = 0;              // updates the LED state
+        delay(200);
+        digitalWrite(g_ledPin, HIGH);   // sets the green LED off
+        ledStates[0] = 0;              // updates the LED stat           // updates the LED state
+        digitalWrite(r_ledPin, LOW);   // sets the red LED off
+        ledStates[2] = 0;              // updates the LED state
+        digitalWrite(b_ledPin, LOW);
+        delay(200);
+        digitalWrite(g_ledPin, LOW);   // sets the green LED off
+        ledStates[0] = 0;              // updates the LED stat           // updates the LED state
+        digitalWrite(r_ledPin, LOW);   // sets the red LED off
+        ledStates[2] = 0;              // updates the LED state
+        digitalWrite(b_ledPin, HIGH);
+        delay(200);Serial.println("Turns OFF all the LED's");
+        digitalWrite(g_ledPin, LOW);   // sets the green LED off
+        ledStates[0] = 0;              // updates the LED stat           // updates the LED state
+        digitalWrite(r_ledPin, HIGH);   // sets the red LED off
+        ledStates[2] = 0;              // updates the LED state
+        digitalWrite(b_ledPin, LOW);   // sets the blue LED off
+        ledStates[3] = 0;              // updates the LED state
+        delay(200);
+        digitalWrite(g_ledPin, HIGH);   // sets the green LED off
+        ledStates[0] = 0;              // updates the LED stat           // updates the LED state
+        digitalWrite(r_ledPin, LOW);   // sets the red LED off
+        ledStates[2] = 0;              // updates the LED state
+        digitalWrite(b_ledPin, LOW);
+        delay(200);
+        digitalWrite(g_ledPin, LOW);   // sets the green LED off
+        ledStates[0] = 0;              // updates the LED stat           // updates the LED state
+        digitalWrite(r_ledPin, LOW);   // sets the red LED off
+        ledStates[2] = 0;              // updates the LED state
+        digitalWrite(b_ledPin, HIGH);
+        delay(200);Serial.println("Turns OFF all the LED's");
+        digitalWrite(g_ledPin, LOW);   // sets the green LED off
+        ledStates[0] = 0;              // updates the LED stat           // updates the LED state
+        digitalWrite(r_ledPin, HIGH);   // sets the red LED off
+        ledStates[2] = 0;              // updates the LED state
+        digitalWrite(b_ledPin, LOW);   // sets the blue LED off
+        ledStates[3] = 0;              // updates the LED state
+        delay(200);
+        digitalWrite(g_ledPin, HIGH);   // sets the green LED off
+        ledStates[0] = 0;              // updates the LED stat           // updates the LED state
+        digitalWrite(r_ledPin, LOW);   // sets the red LED off
+        ledStates[2] = 0;              // updates the LED state
+        digitalWrite(b_ledPin, LOW);
+        delay(200);
+        digitalWrite(g_ledPin, LOW);   // sets the green LED off
+        ledStates[0] = 0;              // updates the LED stat           // updates the LED state
+        digitalWrite(r_ledPin, LOW);   // sets the red LED off
+        ledStates[2] = 0;              // updates the LED state
+        digitalWrite(b_ledPin, LOW);
+        delay(200);
+
+      default:
+        Serial.println("Waiting");
+    }
+    irrecv.resume(); // Receives the next value from the button you press
+  }
+ 
+}
